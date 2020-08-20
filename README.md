@@ -129,16 +129,16 @@ Draws Manhattan plot from PLINK --assoc output or any assoc formatted data that 
 
 #### 2.2.1. Simple
 ```python
-from qqman import manhattan
+from qqman import qqman
 
 if __name__ == "__main__":
-	manhattan("../../temp.assoc",out="./Manhattan.png")
+	qqman.manhattan("../../temp.assoc",out="./Manhattan.png")
 ```
 ![manhattan plot](static/images/Manhattan.png)
 
 #### 2.2.2. Using Subplot
 ```python
-from qqman import manhattan
+from qqman import qqman
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -147,10 +147,10 @@ if __name__ == "__main__":
 
 	figure, axes = plt.subplots(nrows=2, ncols=2, figsize = (20,20))
 
-	manhattan("../../temp.assoc", ax=axes[0,0],title="Wider gap 100", gap=100)
-	manhattan("../../temp.assoc", ax=axes[0,1],title="No lines",suggestiveline=False, genomewideline=False)
-	manhattan("../../temp.assoc", ax=axes[1,0],title="Different colormap",cmap=plt.get_cmap("jet"),cmap_var=10)
-	manhattan(df_assoc, ax=axes[1,1],title="From DataFrame with xtick rotation",xrotation=45)
+	qqman.manhattan("../../temp.assoc", ax=axes[0,0],title="Wider gap 100", gap=100)
+	qqman.manhattan("../../temp.assoc", ax=axes[0,1],title="No lines",suggestiveline=False, genomewideline=False)
+	qqman.manhattan("../../temp.assoc", ax=axes[1,0],title="Different colormap",cmap=plt.get_cmap("jet"),cmap_var=10)
+	qqman.manhattan(df_assoc, ax=axes[1,1],title="From DataFrame with xtick rotation",xrotation=45)
 
 	figure.tight_layout()
 	plt.savefig("./manhattan.png",format="png")
@@ -226,16 +226,16 @@ types: [string, pandas.DataFrame, numpy.array, list]
 
 #### 3.2.1. Simple
 ```python
-from qqman import qqplot
+from qqman import qqman
 
 if __name__ == "__main__":
-	manhattan("../../temp.assoc",out="./Manhattan.png")
+	qqman.qqplot("../../temp.assoc",out="./QQplot.png")
 ```
 ![manhattan plot](static/images/QQplot.png)
 
 #### 3.2.2. Using Subplot
 ```python
-from qqman import qqplot
+from qqman import qqman
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -245,10 +245,10 @@ if __name__ == "__main__":
 	
 	figure, axes = plt.subplots(nrows=2, ncols=2, figsize = (20,20))
 
-	qqplot("../../temp.assoc", ax=axes[0,0],title="From file")
-	qqplot(p_vals, ax=axes[0,1],title="From list")
-	qqplot(df_assoc.P, ax=axes[1,0],title="From Series")
-	qqplot(df_assoc, ax=axes[1,1],title="From DataFrame")
+	qqman.qqplot("../../temp.assoc", ax=axes[0,0],title="From file")
+	qqman.qqplot(p_vals, ax=axes[0,1],title="From list")
+	qqman.qqplot(df_assoc.P, ax=axes[1,0],title="From Series")
+	qqman.qqplot(df_assoc, ax=axes[1,1],title="From DataFrame")
 
 	figure.tight_layout()
 	plt.savefig("./SubQQplot.png",format="png")

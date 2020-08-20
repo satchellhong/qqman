@@ -5,7 +5,7 @@ with open("README.md", 'r') as fh:
 	
 setuptools.setup(
     name="qqman",
-    version="1.0.1",
+    version="1.0.2",
     license='MIT',
     author="chol hong",
     author_email="shulkhorn@gmail.com",
@@ -16,7 +16,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         # 패키지에 대한 태그
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent"
     ],
