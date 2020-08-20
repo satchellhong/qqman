@@ -2,6 +2,7 @@
 
 ![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.0-green)
 
+If you want to check out the source code or have any issues please leave a comment at my [github](https://github.com/satchellhong/qqman) repository. <br>
 This library is inspired by r-qqman (see [here](https://github.com/stephenturner/qqman)). <br>
 It also contains/will contain other methods for python users.<br>
 
