@@ -1,6 +1,6 @@
 <h1 style="text-align:center">qqman for Python</h1>
 
-![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.5-green)
+![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.6-green)
 
 If you want to check out the source code or have any issues please leave a comment at my [github](https://github.com/satchellhong/qqman) repository. <br>
 This library is inspired by r-qqman (see [here](https://github.com/stephenturner/qqman)). <br>
@@ -10,7 +10,8 @@ It also contains/will contain other methods for python users.<br>
 ## Contents
 1. [Introduction](#h1)<br>
 1.1. [Installation](#h11)<br>
-1.2. [Features](#h12)<br>
+1.2. [Requirements](#h12)<br>
+1.3. [Features](#h13)<br>
 2. [Manhattan Plot](#h2)<br>
 2.1. [Parameters](#h21)<br>
 2.2. [Examples](#h22)<br>
@@ -20,13 +21,33 @@ It also contains/will contain other methods for python users.<br>
 ---
 
 ## <a name="h1">1. Introduction</a>
+
 ### <a name="h11">1.1. Installation</a>
 #### Using pip
 ```console
 $ pip install qqman
 ```
 
-### <a name="h12">1.2. Features</a>
+### <a name="h12">1.2. Requirements</a>
+- matplotlib
+- pandas
+- numpy
+
+#### pip
+```console
+$ pip install numpy
+$ pip install pandas
+$ pip install matplotlib
+```
+
+#### ananconda
+```console
+$ conda install -c anaconda numpy
+$ conda install -y -c anaconda pandas
+$ conda install -y -c conda-forge matplotlib
+```
+
+### <a name="h13">1.3. Features</a>
 1. [Manhattan Plot](#h2)<br>
 2. [QQ Plot](#h3)<br>
 
