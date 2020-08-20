@@ -5,7 +5,7 @@ with open("README.md", 'r') as fh:
 	
 setuptools.setup(
     name="qqman",
-    version="1.0.4",
+    version="1.0.5",
     license='MIT',
     author="chol hong",
     author_email="shulkhorn@gmail.com",
