@@ -1,6 +1,6 @@
 <h1 style="text-align:center">qqman</h1>
 
-![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.3-green)
+![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.4-green)
 
 If you want to check out the source code or have any issues please leave a comment at my [github](https://github.com/satchellhong/qqman) repository. <br>
 This library is inspired by r-qqman (see [here](https://github.com/stephenturner/qqman)). <br>
@@ -134,7 +134,7 @@ from qqman import qqman
 if __name__ == "__main__":
 	qqman.manhattan("../../temp.assoc",out="./Manhattan.png")
 ```
-![manhattan plot](static/images/Manhattan.png)
+<img src="https://github.com/satchellhong/qqman/blob/master/static/images/Manhattan.png?raw=true" alt="Simple Manhattan Plot" width="600" height="600">
 
 #### 2.2.2. Using Subplot
 ```python
@@ -157,7 +157,7 @@ if __name__ == "__main__":
 	plt.clf()
 	plt.close()
 ```
-![manhattan plot](static/images/SubManhattan.png)
+<img src="https://github.com/satchellhong/qqman/blob/master/static/images/SubManhattan.png?raw=true" alt="Simple Manhattan Plot" width="600" height="600">
 
 ## <a name="h3">3. QQ Plot</a>
 
@@ -231,7 +231,8 @@ from qqman import qqman
 if __name__ == "__main__":
 	qqman.qqplot("../../temp.assoc",out="./QQplot.png")
 ```
-![manhattan plot](static/images/QQplot.png)
+
+<img src="https://github.com/satchellhong/qqman/blob/master/static/images/QQplot.png?raw=true" alt="Simple Manhattan Plot" width="600" height="600">
 
 #### 3.2.2. Using Subplot
 ```python
@@ -255,4 +256,5 @@ if __name__ == "__main__":
 	plt.clf()
 	plt.close()
 ```
-![qqplot](static/images/SubQQplot.png)
+
+<img src="https://github.com/satchellhong/qqman/blob/master/static/images/SubQQplot.png?raw=true" alt="Simple Manhattan Plot" width="600" height="600">
