@@ -8,9 +8,9 @@ def ppoints(n, a=None):
 		:param n: array type or number"""
 	
 	if isinstance(n, numbers.Number):
-		n = np.float(n)
+		n = float(n)
 	else:
-		n = np.float(len(n))
+		n = float(len(n))
 	if a == None:
 		a = .375 if n<=10 else .5
 		
