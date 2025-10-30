@@ -1,10 +1,28 @@
 <h1 style="text-align:center">qqman for Python</h1>
 
-![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.6-green)
+![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.8-green)
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-If you want to check out the source code or have any issues please leave a comment at my [github](https://github.com/satchellhong/qqman) repository. <br>
-This library is inspired by r-qqman (see [here](https://github.com/stephenturner/qqman)). <br>
-It also contains/will contain other methods for python users.<br>
+## About This Fork
+
+This is a modernized fork of [satchellhong/qqman](https://github.com/satchellhong/qqman) with the following enhancements:
+
+- **Added Parameters**: Additional `point_size` parameter for Manhattan plots to control marker size
+- **Modernized Dependencies**: Updated to support Python 3.10+ and modern library versions
+- **Azure Databricks Compatibility**: Fully compatible with Azure Databricks Runtime versions 14.3 - 17.3
+- **Modern Packaging**: Added `pyproject.toml` and updated dependency specifications
+
+### Original Project
+
+The original qqman library was created by [satchellhong](https://github.com/satchellhong) and is inspired by the R package [r-qqman](https://github.com/stephenturner/qqman).
+
+### License
+
+This fork maintains the original MIT License. See the [LICENSE](LICENSE) file for details.
+
+**Original Copyright**: Copyright (c) 2020 satchellhong
+**Fork Enhancements**: Additional parameters and modernization updates
 
 ---
 ## Contents
@@ -29,23 +47,23 @@ $ pip install qqman
 ```
 
 ### <a name="h12">1.2. Requirements</a>
-- matplotlib
-- pandas
-- numpy
+- Python 3.10+
+- matplotlib >= 3.7.0
+- pandas >= 1.5.3
+- numpy >= 1.23.5
 
-#### pip
+#### Using uv (recommended - 10-100x faster)
 ```console
-$ pip install numpy
-$ pip install pandas
-$ pip install matplotlib
+$ pip install uv
+$ uv pip install qqman
 ```
 
-#### ananconda
+#### Using pip
 ```console
-$ conda install -c anaconda numpy
-$ conda install -y -c anaconda pandas
-$ conda install -y -c conda-forge matplotlib
+$ pip install qqman
 ```
+
+All dependencies will be installed automatically.
 
 ### <a name="h13">1.3. Features</a>
 1. [Manhattan Plot](#h2)<br>
@@ -134,7 +152,11 @@ Draws Manhattan plot from PLINK --assoc output or any assoc formatted data that 
 </tr>
 <tr>
 <th><code>col_snp</code> : string<br>( optional : default="SNP" )</th>
-<th>A string denoting the column name for the SNP name (rs number). Defaults to PLINK’s "SNP" Said column should be a character</th>
+<th>A string denoting the column name for the SNP name (rs number). Defaults to PLINK's "SNP" Said column should be a character</th>
+</tr>
+<tr>
+<th><code>point_size</code> : int<br>( optional : default=8 )</th>
+<th>The size of the scatter plot markers in the Manhattan plot</th>
 </tr>
 <tr>
 <th><code>suggestiveline</code> : string<br>( optional : default=-log_10(1e-5) )</th>
@@ -202,6 +224,10 @@ types: [string, pandas.DataFrame, numpy.array, list]
 <th>Output path and file name of the plot. (ie. out="./Manhattan.png")</th>
 </tr>
 <tr>
+<th><code>point_size</code> : int<br>( optional )</th>
+<th>The size of the scatter graph points (default s=5).</th>
+</tr>
+<tr>
 <th><code>show</code> : bool<br>( optional )</th>
 <th>If true, the plot will be shown on your screen. (This option doesn't work in CUI environment.)</th>
 </tr>
@@ -264,7 +290,7 @@ import matplotlib.pyplot as plt
 if __name__ == "__main__":
 	df_assoc = pd.read_csv("../../temp.assoc", header=0, delim_whitespace=True)
 	p_vals = list(df_assoc['P'])
-	
+
 	figure, axes = plt.subplots(nrows=2, ncols=2, figsize = (20,20))
 
 	qqman.qqplot("../../temp.assoc", ax=axes[0,0],title="From file")
