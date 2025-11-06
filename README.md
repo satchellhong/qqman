@@ -1,7 +1,7 @@
 <h1 style="text-align:center">qqman for Python</h1>
 
 ![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.8-green)
-![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
+![Python Version](https://img.shields.io/badge/python-3.9%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ## About This Fork
