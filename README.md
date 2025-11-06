@@ -9,8 +9,7 @@
 This is a modernized fork of [satchellhong/qqman](https://github.com/satchellhong/qqman) with the following enhancements:
 
 - **Added Parameters**: Additional `point_size` parameter for Manhattan plots to control marker size
-- **Modernized Dependencies**: Updated to support Python 3.10+ and modern library versions
-- **Azure Databricks Compatibility**: Fully compatible with Azure Databricks Runtime versions 14.3 - 17.3
+- **Modernized Dependencies**: Updated to support Python 3.9+ and newer python package versions
 - **Modern Packaging**: Added `pyproject.toml` and updated dependency specifications
 
 ### Original Project
