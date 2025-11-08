@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "qqman"
+version = "1.0.8"
+description = "Draws Manhattan plot and QQ plot using plink assoc output"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "chol hong", email = "shulkhorn@gmail.com"}
+]
+maintainers = [
+    {name = "chol hong", email = "shulkhorn@gmail.com"}
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+keywords = ["bioinformatics", "gwas", "manhattan plot", "qq plot", "visualization", "genomics"]
+
+dependencies = [
+    "numpy>=1.23.5,<3.0.0",
+    "pandas>=1.5.3,<3.0.0",
+    "matplotlib>=3.7.0,<4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/satchellhong/qqman"
+"Bug Tracker" = "https://github.com/satchellhong/qqman/issues"
+"Source Code" = "https://github.com/satchellhong/qqman"
+
+# Optional development dependencies
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.4.8",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["qqman"]
+
+# uv-specific configuration
+[tool.uv]
+dev-dependencies = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.4.8",
+]
+
+# Ruff configuration for numpy 2.0 compatibility checking
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "NPY201"]  # NPY201 checks numpy 2.0 compatibility
