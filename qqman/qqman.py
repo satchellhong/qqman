@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import os
 import traceback
 import logging
 import numbers
@@ -76,9 +77,9 @@ def manhattan(
         else:
             list_color = cmap_var
 
-    if not (ax or show or out):
+    if (ax is False or ax is None) and not show and not out:
         raise Exception("[ERROR]: Either of the ax, show, and out must have a value.")
-    is_ax = not ax
+    is_ax = ax is False or ax is None
     if isinstance(assoc, str):
         df_assoc = pd.read_csv(assoc, header=0, sep=r"\s+")
     elif isinstance(assoc, pd.DataFrame):
@@ -130,7 +131,7 @@ def manhattan(
         log_p = df_assoc[df_assoc[col_chr] == cChr]["LOG_P"]
 
         ax.scatter(
-            ind, log_p, marker=".", s=point_size, color=list_color[i % cmap_var], **kwargs
+            ind, log_p, marker=".", s=point_size, color=list_color[i % len(list_color)], **kwargs
         )
         x_ticks.append(ind.iloc[0] + (ind.iloc[-1] - ind.iloc[0]) / 2)
         x_labels.append(cChr)
@@ -171,7 +172,9 @@ def manhattan(
         plt.show()
 
     if out:
-        plt.savefig(out, format="png")
+        out_str = os.fspath(out)
+        fmt = out_str.rsplit(".", 1)[-1] if "." in out_str else "png"
+        plt.savefig(out, format=fmt)
 
     if is_ax:
         plt.clf()
@@ -193,26 +196,13 @@ def qqplot(
     title_size=20,
     **kwargs,
 ):
-    if not (ax or show or out):
+    if (ax is False or ax is None) and not show and not out:
         raise Exception("[ERROR]: Either of the ax, show, and out must have a value.")
 
-    isAx = not ax
+    is_ax = ax is False or ax is None
     p_vals = None
     if isinstance(assoc, str):
-        df_assoc = pd.read_csv(
-            assoc,
-            header=0,
-            sep=r"\s+",
-            dtype={
-                1: "category",
-                2: int,
-                4: float,
-                5: float,
-                7: float,
-                8: float,
-                9: float,
-            },
-        )
+        df_assoc = pd.read_csv(assoc, header=0, sep=r"\s+")
         p_vals = df_assoc[col_p].dropna()
         p_vals = p_vals[(p_vals > 0) & (p_vals < 1)]
 
@@ -231,7 +221,7 @@ def qqplot(
     x_padding = (np.nanmax(expected) - np.nanmin(expected)) / 12
     y_padding = (np.nanmax(observed) - np.nanmin(observed)) / 12
 
-    if isAx:
+    if is_ax:
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(12, 12))
     else:
         fig = ax.figure
@@ -243,9 +233,9 @@ def qqplot(
     ylim_min = np.nanmin(observed) - y_padding
     ylim_max = np.nanmax(observed) + y_padding
 
-    max_lim = xlim_max if xlim_max < ylim_max else ylim_max
-    min_lim = xlim_min if xlim_min > ylim_min else ylim_min
-    ax.plot([min_lim, max_lim], [min_lim, max_lim], "r-")
+    ref_min = min(xlim_min, ylim_min)
+    ref_max = max(xlim_max, ylim_max)
+    ax.plot([ref_min, ref_max], [ref_min, ref_max], "r-")
 
     ax.set_xlim([xlim_min, xlim_max])
     ax.set_ylim([ylim_min, ylim_max])
@@ -258,16 +248,18 @@ def qqplot(
     if title:
         ax.set_title(title, fontsize=title_size)
 
-    if isAx:
+    if is_ax:
         fig.tight_layout()
 
     if show:
         plt.show()
 
     if out:
-        plt.savefig(out, format="png")
+        out_str = os.fspath(out)
+        fmt = out_str.rsplit(".", 1)[-1] if "." in out_str else "png"
+        plt.savefig(out, format=fmt)
 
-    if isAx:
+    if is_ax:
         plt.clf()
         plt.close()
 

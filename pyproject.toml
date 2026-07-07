@@ -4,23 +4,25 @@ build-backend = "hatchling.build"
 
 [project]
 name = "qqman"
-version = "1.0.8"
+version = "1.1.0"
 description = "Draws Manhattan plot and QQ plot using plink assoc output"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "chol hong", email = "shulkhorn@gmail.com"}
+    {name = "Seokchol Hong", email = "shulkhorn@gmail.com"}
 ]
 maintainers = [
-    {name = "chol hong", email = "shulkhorn@gmail.com"}
+    {name = "Seokchol Hong", email = "shulkhorn@gmail.com"}
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.8"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -62,7 +64,7 @@ dev-dependencies = [
 # Ruff configuration for numpy 2.0 compatibility checking
 [tool.ruff]
 line-length = 88
-target-version = "py310"
+target-version = "py38"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "NPY201"]  # NPY201 checks numpy 2.0 compatibility

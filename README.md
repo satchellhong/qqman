@@ -1,27 +1,14 @@
 <h1 style="text-align:center">qqman for Python</h1>
 
-![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.0.8-green)
-![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
+![Install with pypi or anaconda](https://img.shields.io/badge/version-v1.1.0-green)
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-## About This Fork
+## About
 
-This is a modernized fork of [satchellhong/qqman](https://github.com/satchellhong/qqman) with the following enhancements:
+qqman is a Python library for drawing Manhattan plots and QQ plots from GWAS association data (PLINK --assoc output or any DataFrame with chromosome/basepair/p-value columns). Inspired by the R package [r-qqman](https://github.com/stephenturner/qqman).
 
-- **Added Parameters**: Additional `point_size` parameter for Manhattan plots to control marker size
-- **Modernized Dependencies**: Updated to support Python 3.9+ and newer python package versions
-- **Modern Packaging**: Added `pyproject.toml` and updated dependency specifications
-
-### Original Project
-
-The original qqman library was created by [satchellhong](https://github.com/satchellhong) and is inspired by the R package [r-qqman](https://github.com/stephenturner/qqman).
-
-### License
-
-This fork maintains the original MIT License. See the [LICENSE](LICENSE) file for details.
-
-**Original Copyright**: Copyright (c) 2020 satchellhong
-**Fork Enhancements**: Additional parameters and modernization updates
+**Author**: [Seokchol Hong](https://github.com/satchellhong)
 
 ---
 ## Contents
@@ -46,7 +33,7 @@ $ pip install qqman
 ```
 
 ### <a name="h12">1.2. Requirements</a>
-- Python 3.10+
+- Python 3.8+
 - matplotlib >= 3.7.0
 - pandas >= 1.5.3
 - numpy >= 1.23.5
