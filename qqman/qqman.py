@@ -14,6 +14,17 @@ from matplotlib import colors
 from .biostats import ppoints
 
 
+def _chromosome_sort_key(label):
+    """Order numeric chromosomes by value, then the rest (X, Y, MT) by name."""
+    name = str(label)
+    if name.lower().startswith("chr"):
+        name = name[3:]
+    try:
+        return (0, float(name), "")
+    except ValueError:
+        return (1, 0.0, name)
+
+
 def manhattan(
     assoc,
     out=False,
@@ -46,7 +57,7 @@ def manhattan(
     if cmap:
         try:
             if isinstance(cmap_var, numbers.Number):
-                step = int(len(cmap.colors) / cmap_var)
+                step = max(1, int(len(cmap.colors) / cmap_var))
 
                 for i, color in enumerate(cmap.colors):
                     if i % step == 0:
@@ -56,7 +67,7 @@ def manhattan(
 
         except AttributeError:
             if isinstance(cmap_var, numbers.Number):
-                step = int(256 / cmap_var)
+                step = max(1, int(256 / cmap_var))
 
                 for i in range(256):
                     if i % step == 0:
@@ -69,7 +80,7 @@ def manhattan(
             if cmap_var == 2:
                 list_color = [colors.to_hex(cmap(0)[:3]), colors.to_hex(cmap(80)[:3])]
             else:
-                step = int(256 / cmap_var)
+                step = max(1, int(256 / cmap_var))
 
                 for i in range(256):
                     if i % step == 0:
@@ -83,7 +94,7 @@ def manhattan(
     if isinstance(assoc, str):
         df_assoc = pd.read_csv(assoc, header=0, sep=r"\s+")
     elif isinstance(assoc, pd.DataFrame):
-        df_assoc = assoc
+        df_assoc = assoc.copy()
     else:
         raise Exception(
             "[ERROR]: assoc must be either string(path) or pandas.DataFrame."
@@ -98,16 +109,24 @@ def manhattan(
     if col_snp not in df_assoc.columns:
         print("[WARNING]: Column '{0}' not found!".format(col_snp))
 
-    df_assoc[col_chr] = df_assoc[col_chr].astype("category")
+    if not isinstance(df_assoc[col_chr].dtype, pd.CategoricalDtype):
+        chroms = sorted(df_assoc[col_chr].dropna().unique(), key=_chromosome_sort_key)
+        df_assoc[col_chr] = pd.Categorical(df_assoc[col_chr], categories=chroms)
     df_assoc[col_bp] = df_assoc[col_bp].astype(int)
     df_assoc[col_p] = df_assoc[col_p].astype(float)
+    n_unplottable = int((df_assoc[col_p] <= 0).sum())
+    if n_unplottable:
+        print(
+            "[WARNING]: {0} SNPs with P <= 0 can't be shown on a -log10 scale "
+            "and are left out of the plot.".format(n_unplottable)
+        )
     df_assoc = df_assoc.sort_values([col_chr, col_bp])
 
     chr_len = [
         len(df_assoc[df_assoc[col_chr] == cChr]) for cChr in df_assoc[col_chr].unique()
     ]
 
-    weight_gap = int(min(chr_len) / 100)
+    weight_gap = max(1, int(min(chr_len) / 100))
 
     list_ind = []
     for cChr in df_assoc[col_chr].unique():
@@ -117,7 +136,8 @@ def manhattan(
         ]
 
     df_assoc["IND"] = list_ind
-    df_assoc["LOG_P"] = -np.log10(df_assoc[col_p])
+    with np.errstate(divide="ignore", invalid="ignore"):
+        df_assoc["LOG_P"] = -np.log10(df_assoc[col_p])
 
     if is_ax:
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(12, 12))
@@ -173,8 +193,8 @@ def manhattan(
 
     if out:
         out_str = os.fspath(out)
-        fmt = out_str.rsplit(".", 1)[-1] if "." in out_str else "png"
-        plt.savefig(out, format=fmt)
+        fmt = os.path.splitext(out_str)[1][1:] or "png"
+        fig.savefig(out, format=fmt)
 
     if is_ax:
         plt.clf()
@@ -215,6 +235,9 @@ def qqplot(
     else:
         p_vals = [ele for ele in assoc if 0 < ele < 1]
 
+    if len(p_vals) == 0:
+        raise Exception("[ERROR]: No p-values between 0 and 1 to plot.")
+
     observed = -np.log10(np.sort(np.array(p_vals)))
     expected = -np.log10(ppoints(len(p_vals)))
 
@@ -226,7 +249,9 @@ def qqplot(
     else:
         fig = ax.figure
 
-    ax.scatter(expected, observed, c="k", **kwargs)
+    if "color" not in kwargs:
+        kwargs.setdefault("c", "k")
+    ax.scatter(expected, observed, **kwargs)
 
     xlim_min = np.nanmin(expected) - x_padding
     xlim_max = np.nanmax(expected) + x_padding
@@ -256,8 +281,8 @@ def qqplot(
 
     if out:
         out_str = os.fspath(out)
-        fmt = out_str.rsplit(".", 1)[-1] if "." in out_str else "png"
-        plt.savefig(out, format=fmt)
+        fmt = os.path.splitext(out_str)[1][1:] or "png"
+        fig.savefig(out, format=fmt)
 
     if is_ax:
         plt.clf()
