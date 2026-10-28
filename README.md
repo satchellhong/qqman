@@ -32,24 +32,19 @@ qqman is a Python library for drawing Manhattan plots and QQ plots from GWAS ass
 $ pip install qqman
 ```
 
-### <a name="h12">1.2. Requirements</a>
-- Python 3.8+
-- matplotlib >= 3.7.0
-- pandas >= 1.5.3
-- numpy >= 1.23.5
-
 #### Using uv (recommended - 10-100x faster)
 ```console
 $ pip install uv
 $ uv pip install qqman
 ```
 
-#### Using pip
-```console
-$ pip install qqman
-```
-
 All dependencies will be installed automatically.
+
+### <a name="h12">1.2. Requirements</a>
+- Python 3.8+
+- matplotlib >= 3.7.0
+- pandas >= 1.5.3
+- numpy >= 1.23.5
 
 ### <a name="h13">1.3. Features</a>
 1. [Manhattan Plot](#h2)<br>
@@ -76,7 +71,7 @@ Draws Manhattan plot from PLINK --assoc output or any assoc formatted data that 
 </tr>
 <tr>
 <th><code>cmap</code> : Colormap<br>( optional : default=Greys_r )</th>
-<th>A Colormap instance or registered colormap name. matplotlib.cm.get_cmap()</th>
+<th>A Colormap instance. matplotlib.pyplot.get_cmap()</th>
 </tr>
 <tr>
 <th><code>cmap_var</code> : int or list<br>( optional : default=2 )</th>
@@ -145,12 +140,12 @@ Draws Manhattan plot from PLINK --assoc output or any assoc formatted data that 
 <th>The size of the scatter plot markers in the Manhattan plot</th>
 </tr>
 <tr>
-<th><code>suggestiveline</code> : string<br>( optional : default=-log_10(1e-5) )</th>
+<th><code>suggestiveline</code> : float<br>( optional : default=-log_10(1e-5) )</th>
 <th>Where to draw a "suggestive" line. Set to False to disable.</th>
 </tr>
 <tr>
-<th><code>genomewideline</code> : string<br>( optional : default=-log_10(5e-8) )</th>
-<th>Where to draw a "genome-wide sigificant" line. Set to False to disable.</th>
+<th><code>genomewideline</code> : float<br>( optional : default=-log_10(5e-8) )</th>
+<th>Where to draw a "genome-wide significant" line. Set to False to disable.</th>
 </tr>
 </table>
 
@@ -172,7 +167,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-	df_assoc = pd.read_csv("../../temp.assoc", header=0, delim_whitespace=True)
+	df_assoc = pd.read_csv("../../temp.assoc", header=0, sep=r"\s+")
 
 	figure, axes = plt.subplots(nrows=2, ncols=2, figsize = (20,20))
 
@@ -186,7 +181,7 @@ if __name__ == "__main__":
 	plt.clf()
 	plt.close()
 ```
-<img src="https://github.com/satchellhong/qqman/blob/master/static/images/SubManhattan.png?raw=true" alt="Simple Manhattan Plot" width="600" height="600">
+<img src="https://github.com/satchellhong/qqman/blob/master/static/images/SubManhattan.png?raw=true" alt="Manhattan Plots in Subplots" width="600" height="600">
 
 ## <a name="h3">3. QQ Plot</a>
 
@@ -198,20 +193,21 @@ Draws a quantile-quantile plot from p-values of GWAS.
 <tr>
 <th>
 <code>assoc</code><br>
-types: [string, pandas.DataFrame, numpy.array, list]
+types: [string, pandas.DataFrame, pandas.Series, numpy.array, list]
 </th>
 <th>
 - Input file path and name of the Plink assoc output.<br>
-- Pandas DataFrame with columns [chromosome/basepair/p-value]
+- Pandas DataFrame with a p-value column (see col_p)<br>
+- Pandas Series, numpy array, or list of p-values
 </th>
 </tr>
 <tr>
 <th><code>out</code> : string<br>( optional )</th>
-<th>Output path and file name of the plot. (ie. out="./Manhattan.png")</th>
+<th>Output path and file name of the plot. (ie. out="./QQplot.png")</th>
 </tr>
 <tr>
-<th><code>point_size</code> : int<br>( optional )</th>
-<th>The size of the scatter graph points (default s=5).</th>
+<th><code>**kwargs</code><br>( optional )</th>
+<th>Passed to matplotlib's scatter(). For example, s=5 sets the point size.</th>
 </tr>
 <tr>
 <th><code>show</code> : bool<br>( optional )</th>
@@ -265,7 +261,7 @@ if __name__ == "__main__":
 	qqman.qqplot("../../temp.assoc",out="./QQplot.png")
 ```
 
-<img src="https://github.com/satchellhong/qqman/blob/master/static/images/QQplot.png?raw=true" alt="Simple Manhattan Plot" width="600" height="600">
+<img src="https://github.com/satchellhong/qqman/blob/master/static/images/QQplot.png?raw=true" alt="Simple QQ Plot" width="600" height="600">
 
 #### 3.2.2. Using Subplot
 ```python
@@ -274,7 +270,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-	df_assoc = pd.read_csv("../../temp.assoc", header=0, delim_whitespace=True)
+	df_assoc = pd.read_csv("../../temp.assoc", header=0, sep=r"\s+")
 	p_vals = list(df_assoc['P'])
 
 	figure, axes = plt.subplots(nrows=2, ncols=2, figsize = (20,20))
@@ -290,4 +286,4 @@ if __name__ == "__main__":
 	plt.close()
 ```
 
-<img src="https://github.com/satchellhong/qqman/blob/master/static/images/SubQQplot.png?raw=true" alt="Simple Manhattan Plot" width="600" height="600">
+<img src="https://github.com/satchellhong/qqman/blob/master/static/images/SubQQplot.png?raw=true" alt="QQ Plots in Subplots" width="600" height="600">
